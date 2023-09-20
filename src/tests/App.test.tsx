@@ -1,11 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import vi, { describe } from 'vitest';
 import App from '../App';
 import { renderWithRouter } from '../utils/renderWithRouter';
-import Login from '../Login/Login';
-// import * as funcs from '../Login/index';
 
 describe('Farewell, front-end', () => {
   it('teste referentes a renderização dos elementos da tela Login', async () => {
