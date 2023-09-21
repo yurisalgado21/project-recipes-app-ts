@@ -1,14 +1,17 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
 import App from '../App';
 import { renderWithRouter } from '../utils/renderWithRouter';
-import * as math from '../components/Profile';
+
+const emailTest = 'joaozin@gmail.com';
+const testIdEmail = 'profile-email';
 
 describe('Testes do componente Profile', () => {
-  const emailTest = 'joaozin@gmail.com';
+  it('testando direto no Profile', () => {
+    renderWithRouter(<App />, { route: '/profile' });
+    expect(screen.getByTestId(testIdEmail)).toBeInTheDocument();
+  });
   it('verificando se está renderizando todos os elementos', async () => {
-    const mockEmail = vi.spyOn(math, 'default');
     renderWithRouter(<App />);
     const inputEmail = screen.getByRole('textbox', {
       name: /email:/i,
@@ -24,7 +27,7 @@ describe('Testes do componente Profile', () => {
     });
     await userEvent.click(btnProfile);
 
-    const email = screen.getByTestId('profile-email');
+    const email = screen.getByTestId(testIdEmail);
     const btnDoneRecipes = screen.getByRole('button', {
       name: /done recipes/i,
     });
@@ -34,7 +37,7 @@ describe('Testes do componente Profile', () => {
     const btnLogout = screen.getByRole('button', {
       name: /logout/i,
     });
-    expect(mockEmail).toHaveBeenCalled();
+
     expect(email).toBeInTheDocument();
     expect(screen.getByRole('heading', {
       name: /joaozin@gmail\.com/i,
@@ -60,7 +63,7 @@ describe('Testes do componente Profile', () => {
     });
     await userEvent.click(btnProfile);
 
-    const email = screen.getByTestId('profile-email');
+    const email = screen.getByTestId(testIdEmail);
     const btnLogout = screen.getByRole('button', {
       name: /logout/i,
     });
@@ -71,5 +74,27 @@ describe('Testes do componente Profile', () => {
       name: /email:/i,
     });
     expect(newInputEmail).toBeInTheDocument();
+  });
+
+  it('testando o botão de Done', async () => {
+    renderWithRouter(<App />, { route: '/profile' });
+    const btnDone = screen.getByRole('button', {
+      name: /done recipes/i,
+    });
+    await userEvent.click(btnDone);
+    expect(screen.getByRole('heading', {
+      name: /done recipes/i,
+    })).toBeInTheDocument();
+  });
+
+  it('testando o botão de Favorite', async () => {
+    renderWithRouter(<App />, { route: '/profile' });
+    const btnFavorite = screen.getByRole('button', {
+      name: /favorite recipes/i,
+    });
+    await userEvent.click(btnFavorite);
+    expect(screen.getByRole('heading', {
+      name: /favorite recipes/i,
+    })).toBeInTheDocument();
   });
 });
