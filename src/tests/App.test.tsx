@@ -46,19 +46,19 @@ describe('Farewell, front-end', () => {
     expect(button).toBeDisabled();
     userEvent.click(button);
   });
-  // test('Testando o input button click na rota /meals', () => {
-  //   const { user } = renderWithRouter(<App />, { route: '/meals' });
-  //   expect(screen.getByRole('heading', {
-  //     name: /meals/i,
-  //   })).toBeInTheDocument();
-  //   const button = screen.getByRole('button', {
-  //     name: /pesquisar/i,
-  //   });
-  //   expect(button).toBeInTheDocument();
-  //   user.click(button);
-  //   expect(screen.getByTestId('search-top-btn')).toBeInTheDocument();
-  //   user.click(button);
-  // });
+  test('Testando o input button click na rota /meals', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    expect(screen.getByRole('heading', {
+      name: /meals/i,
+    })).toBeInTheDocument();
+    const button = screen.getByTestId('search-top-btn');
+    console.log(button);
+    expect(button).toBeInTheDocument();
+    await userEvent.click(button);
+    expect(screen.getByTestId('search-input')).toBeVisible();
+    await userEvent.click(button);
+    expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
+  });
 
   // test('toggle search input in Header when clicking the search button', () => {
   //   render(<Meals />);
