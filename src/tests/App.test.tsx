@@ -1,10 +1,9 @@
-import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouter } from '../utils/renderWithRouter';
-import Header from '../components/Header';
-import Meals from '../components/Meals';
+// import Header from '../components/Header';
+// import Meals from '../components/Meals';
 
 describe('Farewell, front-end', () => {
   it('teste referentes a renderização dos elementos da tela Login', async () => {
