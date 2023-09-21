@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
+import { DrinkTypes } from '../types';
 
 export default function Drinks() {
-  const [drinks, setDrinks] = useState([]);
+  const [drinks, setDrinks] = useState<DrinkTypes[]>([]);
 
   useEffect(() => {
     const fetchDrinks = async () => {
@@ -10,8 +11,9 @@ export default function Drinks() {
         const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
         const data = await response.json();
         setDrinks(data.drinks);
+        console.log(data.drinks);
       } catch (error) {
-        console.error('Erro ao buscar receitas de comidas:', error);
+        console.error('Erro ao buscar receitas de bebidas:', error);
       }
     };
     fetchDrinks();
