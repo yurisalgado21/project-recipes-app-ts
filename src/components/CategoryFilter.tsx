@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+// consertando branch
 
 type CategoryFilterProps = {
   isCategory: boolean;
