@@ -23,7 +23,7 @@ function Login() {
       [id]: value,
     });
   };
-  console.log(form);
+
   const { email, password } = form;
   return (
     <form
