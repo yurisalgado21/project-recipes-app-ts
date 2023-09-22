@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 type HeaderProps = {
   title: string;
@@ -19,9 +20,6 @@ export default function Header({ title, showProfileIcon, showSearchIcon }: Heade
         <div>
           <button onClick={ () => setShowSearchInput(!showSearchInput) }>
             <img src={ searchIcon } alt="Pesquisar" data-testid="search-top-btn" />
-            {showSearchInput && (
-              <input type="text" placeholder="Pesquisar" data-testid="search-input" />
-            )}
           </button>
         </div>
       )}
@@ -30,6 +28,7 @@ export default function Header({ title, showProfileIcon, showSearchIcon }: Heade
           <img src={ profileIcon } alt="Perfil" data-testid="profile-top-btn" />
         </Link>
       )}
+      {showSearchInput && <SearchBar />}
     </header>
   );
 }
