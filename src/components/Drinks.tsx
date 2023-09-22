@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import { DrinkTypes } from '../types';
+import CategoryFilter from './CategoryFilter';
 
 export default function Drinks() {
   const [drinks, setDrinks] = useState<DrinkTypes[]>([]);
@@ -21,18 +22,21 @@ export default function Drinks() {
   return (
     <div>
       <Header title="Drinks" showProfileIcon showSearchIcon />
+      <CategoryFilter isCategory={ false } />
       <div>
-        <h1>Receitas de bebidas</h1>
-        {drinks.slice(0, 12).map((drink, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ drink.strDrinkThumb }
-              alt={ drink.strDrink }
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
-          </div>
-        ))}
+        <h1>Drink Recipes</h1>
+        {drinks.slice(0, 12).map((drink, index) => {
+          return (
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
