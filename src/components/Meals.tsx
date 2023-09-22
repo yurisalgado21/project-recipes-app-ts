@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import { MealTypes } from '../types';
+import CategoryFilter from './CategoryFilter';
 
 export default function Meals() {
   const [meals, setMeals] = useState<MealTypes[]>([]);
@@ -23,8 +24,9 @@ export default function Meals() {
 
     <div>
       <Header title="Meals" showProfileIcon showSearchIcon />
+      <CategoryFilter isCategory />
       <div>
-        <h1>Receitas de comidas</h1>
+        <h1>Meal Recipes</h1>
         {meals.slice(0, 12).map((meal, index) => {
           console.log(meal);
           return (

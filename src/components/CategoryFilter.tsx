@@ -7,6 +7,10 @@ type CategoryFilterProps = {
 function CategoryFilter({ isCategory } : CategoryFilterProps) {
   const [categories, setCategories] = useState<string[]>([]);
 
+  const handleCategoryClick = (categoryName: string) => {
+    setCategories((prevCategories) => [...prevCategories, categoryName]);
+  };
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -15,7 +19,7 @@ function CategoryFilter({ isCategory } : CategoryFilterProps) {
 
         const response = await fetch(endpoint);
         const data = await response.json();
-        const firstFiveCategories = data.fiveCategories.slice(0, 5)
+        const firstFiveCategories = data[isCategory ? 'meals' : 'drinks'].slice(0, 5)
           .map((category: any) => category.strCategory);
         setCategories(firstFiveCategories);
       } catch (error) {
@@ -26,14 +30,18 @@ function CategoryFilter({ isCategory } : CategoryFilterProps) {
   }, [isCategory]);
   return (
     <div>
-      {categories.map((categoryName, index) => (
-        <button
-          key={ index }
-          data-testid={ `${categoryName}-category-filter` }
-        >
-          {categoryName}
-        </button>
-      ))}
+      {categories.map((categoryName, index) => {
+        console.log(categoryName);
+        return (
+          <button
+            key={ index }
+            data-testid={ `${categoryName}-category-filter` }
+            onClick={ () => handleCategoryClick(categoryName) }
+          >
+            {categoryName}
+          </button>
+        );
+      })}
     </div>
   );
 }
