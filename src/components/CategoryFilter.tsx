@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 
 type CategoryFilterProps = {
   isCategory: boolean;
+  selectedCategory: string;
+  setSelectedCategory: (category:string) => void;
 };
 
-function CategoryFilter({ isCategory } : CategoryFilterProps) {
+function CategoryFilter({ isCategory, selectedCategory,
+  setSelectedCategory } : CategoryFilterProps) {
   const [categories, setCategories] = useState<string[]>([]);
 
   const handleCategoryClick = (categoryName: string) => {
@@ -34,6 +37,12 @@ function CategoryFilter({ isCategory } : CategoryFilterProps) {
   }, [isCategory]);
   return (
     <div>
+      <button
+        data-testid="All-category-filter"
+        onClick={ () => setSelectedCategory('') }
+      >
+        All
+      </button>
       {categories.map((categoryName, index) => {
         return (
           <button
