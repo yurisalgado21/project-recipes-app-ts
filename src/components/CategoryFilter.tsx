@@ -3,11 +3,14 @@ import { useState, useEffect } from 'react';
 type CategoryFilterProps = {
   isCategory: boolean;
   selectedCategory: string;
-  setSelectedCategory: (category:string) => void;
+  setSelectedCategory: (category: string) => void;
+  clearFilters: () => void;
 };
 
-function CategoryFilter({ isCategory, selectedCategory,
-  setSelectedCategory } : CategoryFilterProps) {
+function CategoryFilter({ isCategory,
+  selectedCategory,
+  setSelectedCategory,
+  clearFilters } : CategoryFilterProps) {
   const [categories, setCategories] = useState<string[]>([]);
 
   const handleCategoryClick = (categoryName: string) => {
@@ -16,13 +19,11 @@ function CategoryFilter({ isCategory, selectedCategory,
       setCategories((prevCategories) => [...prevCategories, categoryName]);
     }
   };
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const endpoint = isCategory ? 'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
           : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-
         const response = await fetch(endpoint);
         const data = await response.json();
         console.log(data);
@@ -37,10 +38,7 @@ function CategoryFilter({ isCategory, selectedCategory,
   }, [isCategory]);
   return (
     <div>
-      <button
-        data-testid="All-category-filter"
-        onClick={ () => setSelectedCategory('') }
-      >
+      <button data-testid="All-category-filter" onClick={ clearFilters }>
         All
       </button>
       {categories.map((categoryName, index) => {

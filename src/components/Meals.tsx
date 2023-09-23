@@ -5,26 +5,42 @@ import CategoryFilter from './CategoryFilter';
 
 export default function Meals() {
   const [meals, setMeals] = useState<MealTypes[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const clearFilters = () => {
+    setSelectedCategory('');
+  };
 
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        let endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        if (selectedCategory) {
+          endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`;
+        }
+        const response = await fetch(endpoint);
         const data = await response.json();
-        setMeals(data.meals);
-        console.log(data.meals);
+        if (data.meals && data.meals.length === 1) {
+          setMeals(data.meals[0]);
+        } else {
+          setMeals(data.meals);
+        }
       } catch (error) {
         console.error('Erro ao buscar receitas de comidas:', error);
       }
     };
     fetchMeals();
-  }, []);
+  }, [selectedCategory]);
   console.log(meals);
   return (
 
     <div>
       <Header title="Meals" showProfileIcon showSearchIcon />
-      <CategoryFilter isCategory />
+      <CategoryFilter
+        isCategory
+        selectedCategory={ selectedCategory }
+        setSelectedCategory={ setSelectedCategory }
+        clearFilters={ clearFilters }
+      />
       <div>
         <h1>Meal Recipes</h1>
         {meals.slice(0, 12).map((meal, index) => {
