@@ -15,9 +15,7 @@ function CategoryFilter({ isCategory,
 
   const handleCategoryClick = (categoryName: string) => {
     console.log('Cliquei em:', categoryName);
-    if (!categories.includes(categoryName)) {
-      setCategories((prevCategories) => [...prevCategories, categoryName]);
-    }
+    setSelectedCategory(categoryName);
   };
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,7 +33,7 @@ function CategoryFilter({ isCategory,
       }
     };
     fetchCategories();
-  }, [isCategory]);
+  }, [isCategory, selectedCategory]);
   return (
     <div>
       <button data-testid="All-category-filter" onClick={ clearFilters }>

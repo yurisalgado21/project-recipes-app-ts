@@ -6,6 +6,7 @@ import CategoryFilter from './CategoryFilter';
 export default function Drinks() {
   const [drinks, setDrinks] = useState<DrinkTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+
   const clearFilters = () => {
     setSelectedCategory('');
   };
@@ -19,18 +20,19 @@ export default function Drinks() {
         }
         const response = await fetch(endpoint);
         const data = await response.json();
+
         if (data.drinks && data.drinks.length === 1) {
           setDrinks(data.drinks[0]);
         } else {
           setDrinks(data.drinks);
         }
       } catch (error) {
-        console.error('Erro ao buscar receitas de comidas:', error);
+        console.error('Erro ao buscar receitas de bebidas:', error);
       }
     };
     fetchDrinks();
-  }, [selectedCategory]);
-  console.log(drinks);
+  }, [selectedCategory, drinks]);
+
   return (
     <div>
       <Header title="Drinks" showProfileIcon showSearchIcon />
@@ -42,16 +44,18 @@ export default function Drinks() {
       />
       <div>
         <h1>Drink Recipes</h1>
-        {drinks.slice(0, 12).map((drink, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ drink.strDrinkThumb }
-              alt={ drink.strDrink }
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
-          </div>
-        ))}
+        {drinks.slice(0, 12).map((drink, index) => {
+          return (
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

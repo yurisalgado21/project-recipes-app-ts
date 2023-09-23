@@ -6,11 +6,14 @@ import CategoryFilter from './CategoryFilter';
 export default function Meals() {
   const [meals, setMeals] = useState<MealTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+
   const clearFilters = () => {
     setSelectedCategory('');
   };
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // setIsLoading(true);
     const fetchMeals = async () => {
       try {
         let endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
@@ -19,20 +22,22 @@ export default function Meals() {
         }
         const response = await fetch(endpoint);
         const data = await response.json();
+
         if (data.meals && data.meals.length === 1) {
           setMeals(data.meals[0]);
         } else {
           setMeals(data.meals);
         }
+        // setIsLoading(false);
       } catch (error) {
         console.error('Erro ao buscar receitas de comidas:', error);
+        // setIsLoading(false);
       }
     };
     fetchMeals();
-  }, [selectedCategory]);
-  console.log(meals);
+  }, [selectedCategory, meals]);
+  // console.log(meals);
   return (
-
     <div>
       <Header title="Meals" showProfileIcon showSearchIcon />
       <CategoryFilter
@@ -44,7 +49,6 @@ export default function Meals() {
       <div>
         <h1>Meal Recipes</h1>
         {meals.slice(0, 12).map((meal, index) => {
-          console.log(meal);
           return (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
               <img
