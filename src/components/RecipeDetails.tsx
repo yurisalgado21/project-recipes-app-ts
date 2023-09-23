@@ -6,7 +6,16 @@ export default function RecipeDetails() {
   const isMeal = pathname.includes('meals');
   const recipeId = pathname.split('/')[2];
   const { value, loading } = useRequestId(isMeal, recipeId);
+  const ingredients = Object.keys(value)
+    .filter((key) => key.includes('strIngredient'))
+    .map((k) => value[k])
+    .filter((v) => v !== null && v !== '');
+  const measurements = Object.keys(value)
+    .filter((key) => key.includes('strMeasure'))
+    .map((k) => value[k])
+    .filter((v) => v !== null && v !== '');
   console.log(value);
+  console.log(measurements);
 
   if (loading) {
     return (
@@ -22,7 +31,21 @@ export default function RecipeDetails() {
         data-testid="recipe-photo"
       />
       <h1 data-testid="recipe-title">{value.strMeal || value.strDrink}</h1>
-      <h3 data-testid="recipe-category">{value.strCategory}</h3>
+      <h3 data-testid="recipe-category">
+        {isMeal
+          ? value.strCategory
+          : value.strAlcoholic}
+      </h3>
+      <ul>
+        {ingredients.map((ingredient, index) => (
+          <li
+            key={ index }
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            {`${ingredient} - ${measurements[index]}`}
+          </li>
+        ))}
+      </ul>
       <p data-testid="instructions">{value.strInstructions}</p>
       <iframe
         data-testid="video"
