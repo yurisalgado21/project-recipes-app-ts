@@ -14,8 +14,6 @@ export default function RecipeDetails() {
     .filter((key) => key.includes('strMeasure'))
     .map((k) => value[k])
     .filter((v) => v !== null && v !== '');
-  console.log(value);
-  console.log(measurements);
 
   if (loading) {
     return (
