@@ -23,8 +23,8 @@ export default function Meals() {
         const response = await fetch(endpoint);
         const data = await response.json();
 
-        if (data.meals && data.meals.length === 1) {
-          setMeals(data.meals[0]);
+        if (data.meals && data.meals.length === 0) {
+          setMeals(data);
         } else {
           setMeals(data.meals);
         }

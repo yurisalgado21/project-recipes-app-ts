@@ -21,8 +21,8 @@ export default function Drinks() {
         const response = await fetch(endpoint);
         const data = await response.json();
 
-        if (data.drinks && data.drinks.length === 1) {
-          setDrinks(data.drinks[0]);
+        if (data.drinks && data.drinks.length === 0) {
+          setDrinks(data);
         } else {
           setDrinks(data.drinks);
         }
