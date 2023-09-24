@@ -121,5 +121,8 @@ describe('testes da página DoneRecipes', () => {
       name: /spicy arrabiata penne/i,
     })).toBeInTheDocument();
     expect(imageAquamarine).toBeInTheDocument();
+    expect(screen.getByRole('heading', {
+      name: /aquamarine/i,
+    })).toBeInTheDocument();
   });
 });
