@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import useRequestId from '../hooks/useRequestId';
+import Carousel from './Carousel';
 
 export default function RecipeDetails() {
   const { pathname } = useLocation();
@@ -59,6 +60,7 @@ export default function RecipeDetails() {
           picture-in-picture;"
         allowFullScreen
       />
+      <Carousel />
     </>
   );
 }
