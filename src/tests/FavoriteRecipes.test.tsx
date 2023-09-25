@@ -1,22 +1,22 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import doneRecipes from '../utils/DoneRecipesMock';
 import { renderWithRouter } from '../utils/renderWithRouter';
+import FavoriteRecipesMock from '../utils/FavoriteRecipesMock';
 
-describe('testes da página DoneRecipes', () => {
-  const DoneRecipes = 'done-recipes';
+describe('testes da página de receitas favoritas', () => {
+  const favoriteRecipes = 'favoriteRecipes';
+  const routeFav = '/favorite-recipes';
 
   beforeEach(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(FavoriteRecipesMock));
   });
   afterEach(() => {
     renderWithRouter(<App />);
   });
-
-  it('vereficando se está renderizando os elementos', () => {
-    renderWithRouter(<App />, { route: DoneRecipes });
-    expect(JSON.parse(localStorage.getItem('doneRecipes') || '[]')).toEqual(doneRecipes);
+  it('verificando renderização dos elementos', () => {
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
     const imageSpicy = screen.getByRole('img', {
       name: /spicy arrabiata penne/i,
     });
@@ -31,8 +31,8 @@ describe('testes da página DoneRecipes', () => {
     expect(nameSpicy).toBeInTheDocument();
   });
   it('testando rotas', async () => {
-    renderWithRouter(<App />, { route: DoneRecipes });
-    expect(JSON.parse(localStorage.getItem('doneRecipes') || '[]')).toEqual(doneRecipes);
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
     const imageSpicy = screen.getByRole('img', {
       name: /spicy arrabiata penne/i,
     });
@@ -42,8 +42,8 @@ describe('testes da página DoneRecipes', () => {
   });
 
   it('testando filter Meals', async () => {
-    renderWithRouter(<App />, { route: DoneRecipes });
-    expect(JSON.parse(localStorage.getItem('doneRecipes') || '[]')).toEqual(doneRecipes);
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
 
     const imageSpicy = screen.getByRole('img', {
       name: /spicy arrabiata penne/i,
@@ -62,8 +62,8 @@ describe('testes da página DoneRecipes', () => {
   });
 
   it('testando filter Drinks', async () => {
-    renderWithRouter(<App />, { route: DoneRecipes });
-    expect(JSON.parse(localStorage.getItem('doneRecipes') || '[]')).toEqual(doneRecipes);
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
 
     const imageSpicy = screen.getByRole('img', {
       name: /spicy arrabiata penne/i,
@@ -83,16 +83,17 @@ describe('testes da página DoneRecipes', () => {
   });
 
   it('testando botão de copiar', async () => {
-    renderWithRouter(<App />, { route: DoneRecipes });
-    expect(JSON.parse(localStorage.getItem('doneRecipes') || '[]')).toEqual(doneRecipes);
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
     const btnCopy = screen.getByTestId('btn-Copy0');
     await userEvent.click(btnCopy);
     expect(screen.getByText(/link copied!/i)).toBeInTheDocument();
   });
 
   it('testando filter All', async () => {
-    renderWithRouter(<App />, { route: DoneRecipes });
-    expect(JSON.parse(localStorage.getItem('doneRecipes') || '[]')).toEqual(doneRecipes);
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
+    const btnCopy = screen.getByTestId('btn-Copy0');
 
     const imageSpicy = screen.getByRole('img', {
       name: /spicy arrabiata penne/i,
@@ -123,5 +124,26 @@ describe('testes da página DoneRecipes', () => {
     expect(screen.getByRole('heading', {
       name: /aquamarine/i,
     })).toBeInTheDocument();
+  });
+
+  it('removendo receitas favoritas', async () => {
+    renderWithRouter(<App />, { route: routeFav });
+    expect(JSON.parse(localStorage.getItem(favoriteRecipes) || '[]')).toEqual(FavoriteRecipesMock);
+    const imageSpicy = screen.getByRole('img', {
+      name: /spicy arrabiata penne/i,
+    });
+    const imageAquamarine = screen.getByRole('img', {
+      name: /aquamarine/i,
+    });
+    const btnFavoriteSpicy = screen.getByTestId('btn-favorite0');
+
+    expect(imageAquamarine).toBeInTheDocument();
+    expect(imageSpicy).toBeInTheDocument();
+    expect(btnFavoriteSpicy).toBeInTheDocument();
+
+    await userEvent.click(btnFavoriteSpicy);
+
+    expect(imageSpicy).not.toBeInTheDocument();
+    expect(imageAquamarine).toBeInTheDocument();
   });
 });
