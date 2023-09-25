@@ -29,8 +29,8 @@ function DoneRecipes() {
     setListDone(globlalListDone.filter((list) => list.type === 'meal'));
   };
 
-  const handleCopy = (id: string, index: number) => {
-    navigator.clipboard.writeText(`http://localhost:3000/meals/${id}`)
+  const handleCopy = (id: string, index: number, type: string) => {
+    navigator.clipboard.writeText(`http://localhost:3000/${type}s/${id}`)
       .then(() => setCopy('Link copied!'))
       .catch(() => console.log('erro'));
     setClicked(index);
@@ -103,7 +103,7 @@ function DoneRecipes() {
                 <button
                   data-testid={ `btn-Copy${index}` }
                   style={ { width: '150px' } }
-                  onClick={ () => handleCopy(list.id, index) }
+                  onClick={ () => handleCopy(list.id, index, list.type) }
                 >
                   <img
                     data-testid={ `${index}-horizontal-share-btn` }
