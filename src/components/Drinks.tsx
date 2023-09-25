@@ -31,7 +31,7 @@ export default function Drinks() {
       }
     };
     fetchDrinks();
-  }, [selectedCategory, drinks]);
+  }, [selectedCategory]);
 
   return (
     <div>
