@@ -116,3 +116,8 @@ export type DrinkTypes = {
   strCreativeCommonsConfirmed: string;
   dateModified: string;
 };
+
+export type ApiResultType = {
+  [key: string]: string
+};
+// esse type pode provavelmente substituir os outros dois acima, pode ser usado para refatoração

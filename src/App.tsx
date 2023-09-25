@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import DoneRecipes from './components/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes';
 import Layout from './components/Layout';
+import RecipeDetails from './components/RecipeDetails';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/drinks" element={ <Drinks /> } />
         <Route path="/profile" element={ <Profile /> } />
       </Route>
+      <Route path="/meals/:mealid" element={ <RecipeDetails /> } />
+      <Route path="/drinks/:drinkid" element={ <RecipeDetails /> } />
       <Route path="/done-recipes" element={ <DoneRecipes /> } />
       <Route path="/favorite-recipes" element={ <FavoriteRecipes /> } />
     </Routes>
