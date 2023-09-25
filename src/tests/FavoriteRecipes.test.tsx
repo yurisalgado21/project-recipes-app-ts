@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouter } from '../utils/renderWithRouter';
 import FavoriteRecipesMock from '../utils/FavoriteRecipesMock';
-import '../utils/localStorage';
 
 describe('testes da página de receitas favoritas', () => {
   const favoriteRecipes = 'favoriteRecipes';

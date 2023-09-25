@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import '../utils/localStorage';
 import doneRecipes from '../utils/DoneRecipesMock';
 import { renderWithRouter } from '../utils/renderWithRouter';
 
