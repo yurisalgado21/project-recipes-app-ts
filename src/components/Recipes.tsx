@@ -2,7 +2,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Meals from './Meals';
 import Drinks from './Drinks';
-import CategoryFilter from './CategoryFilter';
 
 function Recipes() {
   const location = useLocation();
@@ -11,7 +10,6 @@ function Recipes() {
   return (
     <div>
       <h1>{isMealsRoute ? 'Meals' : 'Drinks'}</h1>
-      <CategoryFilter isCategory={ isMealsRoute } />
       {isMealsRoute ? <Meals /> : <Drinks />}
       {/*
       <h1>{isDrinksRoute ? 'Drinks' : 'Meals'}</h1>
