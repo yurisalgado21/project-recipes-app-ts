@@ -6,9 +6,15 @@ import CategoryFilter from './CategoryFilter';
 export default function Drinks() {
   const [drinks, setDrinks] = useState<DrinkTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [isFilterActive, setIsFilterActive] = useState(false);
+
+  const toggleFilter = () => {
+    setIsFilterActive(!isFilterActive);
+  };
 
   const clearFilters = () => {
     setSelectedCategory('');
+    setIsFilterActive(false);
   };
 
   useEffect(() => {
@@ -17,6 +23,8 @@ export default function Drinks() {
         let endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
         if (selectedCategory) {
           endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${selectedCategory}`;
+        } else if (isFilterActive) {
+          endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
         }
         const response = await fetch(endpoint);
         const data = await response.json();
@@ -31,7 +39,7 @@ export default function Drinks() {
       }
     };
     fetchDrinks();
-  }, [selectedCategory]);
+  }, [selectedCategory, isFilterActive]);
 
   return (
     <div>
@@ -41,6 +49,7 @@ export default function Drinks() {
         selectedCategory={ selectedCategory }
         setSelectedCategory={ setSelectedCategory }
         clearFilters={ clearFilters }
+
       />
       <div>
         <h1>Drink Recipes</h1>

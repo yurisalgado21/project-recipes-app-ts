@@ -6,9 +6,15 @@ import CategoryFilter from './CategoryFilter';
 export default function Meals() {
   const [meals, setMeals] = useState<MealTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [isFilterActive, setIsFilterActive] = useState(false);
+
+  // const toggleFilter = () => {
+  //   setIsFilterActive(!isFilterActive);
+  // };
 
   const clearFilters = () => {
     setSelectedCategory('');
+    setIsFilterActive(false);
   };
   // const [isLoading, setIsLoading] = useState(true);
 
@@ -19,6 +25,8 @@ export default function Meals() {
         let endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
         if (selectedCategory) {
           endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`;
+        } else if (isFilterActive) {
+          endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
         }
         const response = await fetch(endpoint);
         const data = await response.json();
@@ -36,7 +44,7 @@ export default function Meals() {
     };
     console.log('Teste');
     fetchMeals();
-  }, [selectedCategory]);
+  }, [selectedCategory, isFilterActive]);
   // console.log(meals);
   return (
     <div>
@@ -46,6 +54,7 @@ export default function Meals() {
         selectedCategory={ selectedCategory }
         setSelectedCategory={ setSelectedCategory }
         clearFilters={ clearFilters }
+
       />
       <div>
         <h1>Meal Recipes</h1>
