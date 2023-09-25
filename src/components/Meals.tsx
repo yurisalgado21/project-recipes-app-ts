@@ -34,8 +34,9 @@ export default function Meals() {
         // setIsLoading(false);
       }
     };
+    console.log('Teste');
     fetchMeals();
-  }, [selectedCategory, meals]);
+  }, [selectedCategory]);
   // console.log(meals);
   return (
     <div>
