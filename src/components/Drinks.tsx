@@ -8,9 +8,9 @@ export default function Drinks() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterActive, setIsFilterActive] = useState(false);
 
-  const toggleFilter = () => {
-    setIsFilterActive(!isFilterActive);
-  };
+  // const toggleFilter = () => {
+  //   setIsFilterActive(!isFilterActive);
+  // };
 
   const clearFilters = () => {
     setSelectedCategory('');
