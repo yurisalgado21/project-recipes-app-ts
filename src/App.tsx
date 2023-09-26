@@ -9,6 +9,8 @@ import Profile from './components/Profile';
 import DoneRecipes from './components/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes';
 import Layout from './components/Layout';
+import RecipeDetails from './components/RecipeDetails';
+import DrinksDetails from './components/DrinksDetails';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/drinks" element={ <Drinks /> } />
         <Route path="/profile" element={ <Profile /> } />
       </Route>
+      <Route path="/meals/:id" element={ <RecipeDetails /> } />
+      <Route path="/drinks/:id" element={ <DrinksDetails /> } />
       <Route path="/done-recipes" element={ <DoneRecipes /> } />
       <Route path="/favorite-recipes" element={ <FavoriteRecipes /> } />
     </Routes>

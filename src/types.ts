@@ -1,6 +1,8 @@
 export interface GlobalTypeContext {
   result: MealsApiType[] | undefined;
   getApiFetch: (searchType: string, param: string, url: string) => Promise<void>;
+  resultDrinks: DrinkApiTypes[] | undefined;
+  getApiFetchDrinks: (searchType: string, param: string, url: string) => Promise<void>;
 }
 
 export interface MealsApiType {
@@ -8,6 +10,12 @@ export interface MealsApiType {
   strMeal: string;
   strCategory: string;
 }
+
+export type DrinkApiTypes = {
+  idDrink: string;
+  strDrink: string;
+  strCategory: string;
+};
 
 export type MealTypes = {
   idMeal:string;
