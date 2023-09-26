@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 import { MealTypes } from '../types';
 import CategoryFilter from './CategoryFilter';
@@ -7,10 +8,6 @@ export default function Meals() {
   const [meals, setMeals] = useState<MealTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterActive, setIsFilterActive] = useState(false);
-
-  // const toggleFilter = () => {
-  //   setIsFilterActive(!isFilterActive);
-  // };
 
   const clearFilters = () => {
     setSelectedCategory('');
@@ -42,7 +39,6 @@ export default function Meals() {
         // setIsLoading(false);
       }
     };
-    console.log('Teste');
     fetchMeals();
   }, [selectedCategory, isFilterActive]);
   // console.log(meals);
@@ -61,12 +57,14 @@ export default function Meals() {
         {meals.slice(0, 12).map((meal, index) => {
           return (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <img
-                src={ meal.strMealThumb }
-                alt={ meal.strMeal }
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+              <Link to={ `/meals/${meal.idMeal}` }>
+                <img
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+              </Link>
             </div>
           );
         })}
