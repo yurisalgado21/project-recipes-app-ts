@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import useRequestId from '../hooks/useRequestId';
-import Carousel from './Carousel';
+import useRequestId from '../../hooks/useRequestId';
+import Carousel from '../Carousel';
+import './style.css';
 
 export default function RecipeDetails() {
   const { pathname } = useLocation();
@@ -23,7 +24,7 @@ export default function RecipeDetails() {
   }
 
   return (
-    <>
+    <div>
       <img
         src={ value.strMealThumb || value.strDrinkThumb }
         alt="Foto da receita"
@@ -53,14 +54,21 @@ export default function RecipeDetails() {
         src="https://www.youtube.com/embed/Ds1Jb8H5Sg8?si=Ck_njNoHIgrxtt_3"
         title="YouTube video player"
         allow="accelerometer;
-          autoplay;
-          clipboard-write;
-          encrypted-media;
-          gyroscope;
-          picture-in-picture;"
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;"
         allowFullScreen
       />
       <Carousel />
-    </>
+      <button
+        className="start-btn"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+
+      </button>
+    </div>
   );
 }
