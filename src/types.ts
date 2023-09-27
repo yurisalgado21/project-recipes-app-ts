@@ -45,6 +45,7 @@ export type MealTypes = {
   strIngredient18: string;
   strIngredient19: string;
   strIngredient20: string;
+  strInstructions: string;
   strMeasure1: string;
   strMeasure2: string;
   strMeasure3: string;
