@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import useRequestId from '../../hooks/useRequestId';
 import Carousel from '../Carousel';
 import './style.css';
+import StartButton from './StartButton';
 
 export default function RecipeDetails() {
   const { pathname } = useLocation();
@@ -27,7 +28,7 @@ export default function RecipeDetails() {
     <div>
       <img
         src={ value.strMealThumb || value.strDrinkThumb }
-        alt="Foto da receita"
+        alt="Imagem ilustrativa da receita"
         data-testid="recipe-photo"
       />
       <h1 data-testid="recipe-title">{value.strMeal || value.strDrink}</h1>
@@ -62,13 +63,7 @@ export default function RecipeDetails() {
         allowFullScreen
       />
       <Carousel />
-      <button
-        className="start-btn"
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-
-      </button>
+      <StartButton rcpId={ recipeId } />
     </div>
   );
 }
