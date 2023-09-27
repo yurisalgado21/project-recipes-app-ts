@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import { MealTypes } from '../types';
 import CategoryFilter from './CategoryFilter';
+import DataContext from '../context/DataContext';
 
 export default function Meals() {
+  const { result } = useContext(DataContext);
+  const isMeals = window.location.pathname.includes('/meals');
   const [meals, setMeals] = useState<MealTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterActive, setIsFilterActive] = useState(false);
@@ -54,7 +57,7 @@ export default function Meals() {
       />
       <div>
         <h1>Meal Recipes</h1>
-        {meals.slice(0, 12).map((meal, index) => {
+        {isMeals && result?.length === 0 && meals.slice(0, 12).map((meal, index) => {
           return (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
               <Link to={ `/meals/${meal.idMeal}` }>

@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../context/DataContext';
+import { DrinkApiTypes, MealsApiType } from '../types';
+import RecipeCard from './RecipeCard';
 
 export default function SearchBar() {
+  const isMeals = window.location.pathname.includes('/meals');
+  const isdrink = window.location.pathname.includes('/drinks');
   const [inputForm, setInputForm] = useState({
     inputText: '',
     searchType: '',
@@ -27,14 +31,16 @@ export default function SearchBar() {
     if (result?.length === 1) {
       navigate(`/meals/${result[0].idMeal}`);
     }
-    if (result === null) {
-      window.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    if (isMeals && !result) {
+      console.log(result, 'ele ta aqui');
+      window.alert("Sorry, we haven't found any recipes for these filters.");
     }
     if (resultDrinks?.length === 1) {
       navigate(`/drinks/${resultDrinks[0].idDrink}`);
     }
-    if (resultDrinks === null) {
-      window.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    if (isdrink && resultDrinks === null) {
+      console.log(resultDrinks, 'ou ele ta aqui');
+      window.alert("Sorry, we haven't found any recipes for these filters.");
     }
   }, [result, resultDrinks, navigate]);
 
@@ -74,52 +80,89 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <input
-        type="text"
-        name="inputText"
-        placeholder="Pesquisar"
-        data-testid="search-input"
-        value={ inputForm.inputText }
-        onChange={ handleChangeInput }
-      />
-      <label htmlFor="ingredient">
-        Ingredient
+    <>
+      <form onSubmit={ handleSubmit }>
         <input
-          type="radio"
-          data-testid="ingredient-search-radio"
-          value="ingredient"
-          required
-          name="searchType"
-          onChange={ handleChange }
-          checked={ inputRadio === 'ingredient' }
+          type="text"
+          name="inputText"
+          placeholder="Pesquisar"
+          data-testid="search-input"
+          value={ inputForm.inputText }
+          onChange={ handleChangeInput }
         />
-      </label>
-      <label htmlFor="name">
-        Name
-        <input
-          type="radio"
-          data-testid="name-search-radio"
-          value="name"
-          required
-          name="searchType"
-          onChange={ handleChange }
-          checked={ inputRadio === 'name' }
-        />
-      </label>
-      <label htmlFor="firstLetter">
-        First Letter
-        <input
-          type="radio"
-          data-testid="first-letter-search-radio"
-          value="firstLetter"
-          required
-          name="searchType"
-          onChange={ handleChange }
-          checked={ inputRadio === 'firstLetter' }
-        />
-      </label>
-      <button data-testid="exec-search-btn">search</button>
-    </form>
+        <label htmlFor="ingredient">
+          Ingredient
+          <input
+            type="radio"
+            data-testid="ingredient-search-radio"
+            value="ingredient"
+            required
+            name="searchType"
+            onChange={ handleChange }
+            checked={ inputRadio === 'ingredient' }
+          />
+        </label>
+        <label htmlFor="name">
+          Name
+          <input
+            type="radio"
+            data-testid="name-search-radio"
+            value="name"
+            required
+            name="searchType"
+            onChange={ handleChange }
+            checked={ inputRadio === 'name' }
+          />
+        </label>
+        <label htmlFor="firstLetter">
+          First Letter
+          <input
+            type="radio"
+            data-testid="first-letter-search-radio"
+            value="firstLetter"
+            required
+            name="searchType"
+            onChange={ handleChange }
+            checked={ inputRadio === 'firstLetter' }
+          />
+        </label>
+        <button data-testid="exec-search-btn">search</button>
+      </form>
+      {result?.length !== 0 ? (
+        <div>
+          <ul>
+            {result?.slice(0, 12).map((recipe: MealsApiType, index) => {
+              return (
+                console.log(recipe, 'oi eu aqui! o meals'),
+                  <RecipeCard
+                    key={ index }
+                    image={ recipe.strMealThumb }
+                    name={ recipe.strMeal }
+                    index={ index }
+                  />
+              );
+            })}
+          </ul>
+        </div>
+      ) : (
+        resultDrinks?.length !== 0 && (
+          <div>
+            <ul>
+              {resultDrinks?.slice(0, 12).map((recipe: DrinkApiTypes, index) => {
+                return (
+                  console.log(recipe, 'oi eu aqui o drinks!'),
+                    <RecipeCard
+                      key={ index }
+                      image={ recipe.strDrinkThumb }
+                      name={ recipe.strDrink }
+                      index={ index }
+                    />
+                );
+              })}
+            </ul>
+          </div>
+        )
+      )}
+    </>
   );
 }

@@ -9,12 +9,14 @@ export interface MealsApiType {
   idMeal: string;
   strMeal: string;
   strCategory: string;
+  strMealThumb: string;
 }
 
 export type DrinkApiTypes = {
   idDrink: string;
   strDrink: string;
   strCategory: string;
+  strDrinkThumb: string;
 };
 
 export type MealTypes = {
