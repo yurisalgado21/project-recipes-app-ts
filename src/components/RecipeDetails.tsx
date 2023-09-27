@@ -72,7 +72,6 @@ export default function RecipeDetails() {
       localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
     }
   };
-
   return (
     <>
       <img
