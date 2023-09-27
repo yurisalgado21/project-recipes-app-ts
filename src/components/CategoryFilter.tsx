@@ -5,17 +5,23 @@ type CategoryFilterProps = {
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
   clearFilters: () => void;
+
 };
 
-function CategoryFilter({ isCategory,
+function CategoryFilter({
+  isCategory,
   selectedCategory,
   setSelectedCategory,
-  clearFilters } : CategoryFilterProps) {
+  clearFilters,
+  // toggleFilter,
+} : CategoryFilterProps) {
   const [categories, setCategories] = useState<string[]>([]);
 
   const handleCategoryClick = (categoryName: string) => {
     console.log('Cliquei em:', categoryName);
-    setSelectedCategory(categoryName);
+    if (selectedCategory === categoryName) {
+      clearFilters();
+    } else { setSelectedCategory(categoryName); }
   };
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,10 +50,14 @@ function CategoryFilter({ isCategory,
           <button
             key={ index }
             data-testid={ `${categoryName}-category-filter` }
-            onClick={ () => handleCategoryClick(categoryName) }
+            onClick={ () => {
+              handleCategoryClick(categoryName);
+            } }
+
           >
             {categoryName}
           </button>
+
         );
       })}
     </div>

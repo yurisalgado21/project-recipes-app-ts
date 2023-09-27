@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouter } from '../utils/renderWithRouter';
+import DataProvider from '../context/DataProvider';
 // import Header from '../components/Header';
 // import Meals from '../components/Meals';
 
@@ -46,7 +47,12 @@ describe('Farewell, front-end', () => {
     userEvent.click(button);
   });
   test('Testando o input button click na rota /meals', async () => {
-    renderWithRouter(<App />, { route: '/meals' });
+    renderWithRouter(
+      <DataProvider>
+        <App />
+      </DataProvider>,
+      { route: '/meals' },
+    );
     expect(screen.getByRole('heading', {
       name: /meals/i,
     })).toBeInTheDocument();
@@ -57,26 +63,41 @@ describe('Farewell, front-end', () => {
     expect(screen.getByTestId('search-input')).toBeVisible();
     await userEvent.click(button);
     expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
+    await userEvent.click(button);
+    const inputText = screen.getByPlaceholderText(/Pesquisar/i);
+    const inputRadioIngredient = screen.getByText(/ingredient/i);
+    const inputRadioName = screen.getByText(/name/i);
+    const inputRadioFirstLetter = screen.getByText(/first letter/i);
+    const buttonSearch = screen.getByRole('button', {
+      name: /search/i,
+    });
+    await userEvent.type(inputText, 'chicken');
+    await userEvent.click(inputRadioIngredient);
+    await userEvent.click(buttonSearch);
   });
-
-  // test('toggle search input in Header when clicking the search button', () => {
-  //   render(<Meals />);
-  //   const searchButton = screen.getByTestId('search-top-btn');
-  //   const searchInput = screen.getByTestId('search-input');
-
-  //   // Verifique se o input de busca não é exibido inicialmente
-  //   expect(searchInput).not.toBeVisible();
-
-  //   // Clique no botão de busca usando userEvent
-  //   userEvent.click(searchButton);
-
-  //   // Verifique se o input de busca agora é visível
-  //   expect(searchInput).toBeVisible();
-
-  //   // Clique novamente no botão de busca usando userEvent
-  //   userEvent.click(searchButton);
-
-  //   // Verifique se o input de busca foi ocultado novamente
-  //   expect(searchInput).not.toBeVisible();
-  // });
+  test('Testando o input button click na rota /drinks', async () => {
+    renderWithRouter(
+      <DataProvider>
+        <App />
+      </DataProvider>,
+      { route: '/drinks' },
+    );
+    expect(screen.getByRole('heading', {
+      name: /drinks/i,
+    })).toBeInTheDocument();
+    const button = screen.getByTestId('search-top-btn');
+    await userEvent.click(button);
+    const inputText = screen.getByPlaceholderText(/Pesquisar/i);
+    const inputRadioIngredient = screen.getByText(/ingredient/i);
+    const inputRadioName = screen.getByText(/name/i);
+    const inputRadioFirstLetter = screen.getByText(/first letter/i);
+    const buttonSearch = screen.getByRole('button', {
+      name: /search/i,
+    });
+    await userEvent.type(inputText, 'gin');
+    await userEvent.click(inputRadioIngredient);
+    await userEvent.click(inputRadioFirstLetter);
+    await userEvent.click(inputRadioName);
+    await userEvent.click(buttonSearch);
+  });
 });
