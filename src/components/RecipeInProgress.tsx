@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { MealTypes, DrinkTypes } from '../types';
+import IngredientList from './IngredientList';
 
 function RecipesInProgress() {
   const { recipeId } = useParams();
@@ -15,6 +16,7 @@ function RecipesInProgress() {
         const apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
+        console.log(data);
 
         setMealsInfo(data.meals ? data.meals[0] : null);
         setDrinkInfo(null);
@@ -45,7 +47,7 @@ function RecipesInProgress() {
           <p data-testid="instructions">{ mealsInfo.strInstructions }</p>
           <h1 data-testid="recipe-title">{mealsInfo.strMeal}</h1>
           <h2 data-testid="recipe-category">{mealsInfo.strCategory}</h2>
-
+          <IngredientList recipe={ mealsInfo } />
         </div>
       )}
       {drinkInfo && (
@@ -60,7 +62,7 @@ function RecipesInProgress() {
           <p data-testid="instructions">{ drinkInfo.strInstructions }</p>
           <h1 data-testid="recipe-title">{drinkInfo.strDrink}</h1>
           <h2 data-testid="recipe-category">{drinkInfo.strCategory}</h2>
-
+          <IngredientList recipe={ drinkInfo } />
         </div>
       )}
       <button data-testid="share-btn">Compartilhar</button>
