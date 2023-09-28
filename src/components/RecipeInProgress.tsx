@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { MealTypes, DrinkTypes } from '../types';
 import IngredientList from './IngredientList';
+import FavoriteShare from './FavoriteShare';
 
 function RecipesInProgress() {
   const { recipeId } = useParams();
@@ -16,7 +17,6 @@ function RecipesInProgress() {
         const apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log(data);
 
         setMealsInfo(data.meals ? data.meals[0] : null);
         setDrinkInfo(null);
@@ -65,8 +65,7 @@ function RecipesInProgress() {
           <IngredientList recipe={ drinkInfo } />
         </div>
       )}
-      <button data-testid="share-btn">Compartilhar</button>
-      <button data-testid="favorite-btn">Favoritar</button>
+      <FavoriteShare />
       <button data-testid="finish-recipe-btn">Finalizar</button>
     </div>
   );
