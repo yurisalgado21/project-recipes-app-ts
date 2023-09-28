@@ -1,0 +1,16 @@
+.carousel-container {
+  display: flex;
+  gap: 10%;
+  overflow: auto;
+  width: 100%;
+}
+
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+}
+
+.carousel-item img {
+  width: 200px;
+}
