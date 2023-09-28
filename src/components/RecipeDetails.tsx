@@ -5,6 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import Carousel from './Carousel';
+import FavoriteShare from './FavoriteShare';
 
 export default function RecipeDetails() {
   const [isLinkCopied, setLinkCopied] = useState(false);
@@ -14,15 +15,15 @@ export default function RecipeDetails() {
   const recipeId = pathname.split('/')[2];
   const { value, loading } = useRequestId(isMeal, recipeId);
 
-  useEffect(() => {
-    // Verifique se a receita já foi favoritada no localStorage
-    const favoriteRecipesString = localStorage.getItem('favoriteRecipes');
-    const existingFavoriteRecipes = favoriteRecipesString ? JSON
-      .parse(favoriteRecipesString) : [];
-    const isRecipeFavorited = existingFavoriteRecipes
-      .some((recipe: any) => recipe.id === recipeId);
-    setIsFavorited(isRecipeFavorited);
-  }, [recipeId]);
+  // useEffect(() => {
+  //   // Verifique se a receita já foi favoritada no localStorage
+  //   const favoriteRecipesString = localStorage.getItem('favoriteRecipes');
+  //   const existingFavoriteRecipes = favoriteRecipesString ? JSON
+  //     .parse(favoriteRecipesString) : [];
+  //   const isRecipeFavorited = existingFavoriteRecipes
+  //     .some((recipe: any) => recipe.id === recipeId);
+  //   setIsFavorited(isRecipeFavorited);
+  // }, [recipeId]);
 
   const ingredients = Object.keys(value)
     .filter((key) => key.includes('strIngredient'))
@@ -39,39 +40,39 @@ export default function RecipeDetails() {
     );
   }
 
-  const copyToClipboard = () => {
-    const recipeLink = window.location.href;
-    navigator.clipboard.writeText(recipeLink).then(() => {
-      setLinkCopied(true);
-    });
-  };
+  // const copyToClipboard = () => {
+  //   const recipeLink = window.location.href;
+  //   navigator.clipboard.writeText(recipeLink).then(() => {
+  //     setLinkCopied(true);
+  //   });
+  // };
 
-  const favoriteRecipe = {
-    id: value.idMeal || value.idDrink,
-    name: value.strMeal || value.strDrink,
-    type: isMeal ? 'meal' : 'drink',
-    nationality: value.strArea || '',
-    category: value.strCategory || '',
-    alcoholicOrNot: isMeal ? '' : value.strAlcoholic,
-    image: value.strMealThumb || value.strDrinkThumb,
-  };
+  // const favoriteRecipe = {
+  //   id: value.idMeal || value.idDrink,
+  //   name: value.strMeal || value.strDrink,
+  //   type: isMeal ? 'meal' : 'drink',
+  //   nationality: value.strArea || '',
+  //   category: value.strCategory || '',
+  //   alcoholicOrNot: isMeal ? '' : value.strAlcoholic,
+  //   image: value.strMealThumb || value.strDrinkThumb,
+  // };
 
-  const toggleFavorite = () => {
-    setIsFavorited(!isFavorited);
+  // const toggleFavorite = () => {
+  //   setIsFavorited(!isFavorited);
 
-    const favoriteRecipesString = localStorage.getItem('favoriteRecipes');
-    const existingFavoriteRecipes = favoriteRecipesString ? JSON
-      .parse(favoriteRecipesString) : [];
+  //   const favoriteRecipesString = localStorage.getItem('favoriteRecipes');
+  //   const existingFavoriteRecipes = favoriteRecipesString ? JSON
+  //     .parse(favoriteRecipesString) : [];
 
-    if (isFavorited) {
-      const updatedFavoriteRecipes = existingFavoriteRecipes
-        .filter((recipe: any) => recipe.id !== recipeId);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
-    } else {
-      const updatedFavoriteRecipes = [...existingFavoriteRecipes, favoriteRecipe];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
-    }
-  };
+  //   if (isFavorited) {
+  //     const updatedFavoriteRecipes = existingFavoriteRecipes
+  //       .filter((recipe: any) => recipe.id !== recipeId);
+  //     localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
+  //   } else {
+  //     const updatedFavoriteRecipes = [...existingFavoriteRecipes, favoriteRecipe];
+  //     localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
+  //   }
+  // };
   return (
     <>
       <img
@@ -112,7 +113,8 @@ export default function RecipeDetails() {
       />
       <Carousel />
       <div>
-        <button
+        <FavoriteShare />
+        {/* <button
           data-testid="share-btn"
           onClick={ copyToClipboard }
         >
@@ -132,7 +134,7 @@ export default function RecipeDetails() {
             src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
             alt="icon-heart"
           />
-        </button>
+        </button> */}
       </div>
     </>
   );
