@@ -1,4 +1,5 @@
 import { screen, waitFor } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../utils/renderWithRouter';
 import App from '../App';
 import DataProvider from '../context/DataProvider';
@@ -51,6 +52,11 @@ describe('Testes do componente RecipeDetails', () => {
     expect(recipeTitle).toBeInTheDocument();
     expect(isAlcoholic).toBeInTheDocument();
     expect(startBtn).toBeInTheDocument();
+
+    await userEvent.click(startBtn);
+
+    const endBtn = await waitFor(() => screen.getByRole('button', { name: /Finalizar/i }));
+    expect(endBtn).toBeInTheDocument();
   });
 
   it('teste se o botão muda', async () => {
@@ -62,9 +68,13 @@ describe('Testes do componente RecipeDetails', () => {
     );
 
     const recipeImg = await waitFor(() => screen.getByAltText(/Imagem ilustrativa da receita/i));
+    const recipeTitle = await waitFor(() => screen.getByText(/Aquamarine/i));
+    const isAlcoholic = await waitFor(() => screen.getByText(/Alcoholic/i));
     const startBtn = await waitFor(() => screen.getByRole('button', { name: /Continue Recipe/i }));
 
     expect(recipeImg).toBeInTheDocument();
+    expect(recipeTitle).toBeInTheDocument();
+    expect(isAlcoholic).toBeInTheDocument();
     expect(startBtn).toBeInTheDocument();
   });
 });
