@@ -17,7 +17,6 @@ function RecipesInProgress() {
         const apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log(data);
 
         setMealsInfo(data.meals ? data.meals[0] : null);
         setDrinkInfo(null);
