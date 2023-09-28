@@ -21,7 +21,7 @@ describe('RecipeDetails', () => {
 
     await waitForElementToBeRemoved(() => screen.getByText(/carregando.../i));
     const img = screen.getByRole('img', {
-      name: /foto da receita/i,
+      name: /Imagem ilustrativa da receita/i,
     });
     expect(screen.getByText(recipes.name)).toBeInTheDocument();
     expect(screen.getByText(recipes.alcoholicOrNot)).toBeInTheDocument();
