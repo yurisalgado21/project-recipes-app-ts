@@ -75,12 +75,12 @@ describe('RecipeDetails', () => {
       },
     ];
     renderWithRouter(<App />, { route: urlMeals });
+    localStorage.setItem('favoriteRecipes', JSON.stringify(localstorage));
 
     await waitForElementToBeRemoved(() => screen.getByText(/carregando.../i));
     const favoriteButton = screen.getByRole('button', {
       name: /icon-heart/i,
     });
-    await userEvent.click(favoriteButton);
 
     const favoriteRecipes = localStorage.getItem('favoriteRecipes');
     const existingFavoriteRecipes = favoriteRecipes ? JSON
