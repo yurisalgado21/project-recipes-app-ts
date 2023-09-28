@@ -63,7 +63,7 @@ export default function RecipeDetails() {
       />
       <Carousel />
       <div>
-        <FavoriteShare />        
+        <FavoriteShare />
       </div>
     </>
   );

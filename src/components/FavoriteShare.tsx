@@ -13,7 +13,7 @@ function FavoriteShare() {
   const recipeId = pathname.split('/')[2];
   const { value } = useRequestId(isMeal, recipeId);
 
-  useEffect(() => {    
+  useEffect(() => {
     // Verifique se a receita já foi favoritada no localStorage
     const favoriteRecipesString = localStorage.getItem('favoriteRecipes');
     const existingFavoriteRecipes = favoriteRecipesString ? JSON
@@ -25,7 +25,7 @@ function FavoriteShare() {
   }, [recipeId]);
 
   const copyToClipboard = () => {
-    const recipeLink = window.location.href;    
+    const recipeLink = window.location.href;
     navigator.clipboard.writeText(recipeLink.replace('/in-progress', '')).then(() => {
       setLinkCopied(true);
     });
@@ -58,31 +58,29 @@ function FavoriteShare() {
     }
   };
   return (
-    <>      
-      <div>
-        <button
-          data-testid="share-btn"
-          onClick={ copyToClipboard }
-        >
-          <img
-            src={ shareIcon }
-            alt="icon-share"
-          />
-        </button>
-        {isLinkCopied && (
-          <p data-testid="link-copied-message">Link copied!</p>
-        )}
-        <button
-          onClick={ toggleFavorite }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
-            alt="icon-heart"
-          />
-        </button>
-      </div>
-    </>
+    <div>
+      <button
+        data-testid="share-btn"
+        onClick={ copyToClipboard }
+      >
+        <img
+          src={ shareIcon }
+          alt="icon-share"
+        />
+      </button>
+      {isLinkCopied && (
+        <p data-testid="link-copied-message">Link copied!</p>
+      )}
+      <button
+        onClick={ toggleFavorite }
+      >
+        <img
+          data-testid="favorite-btn"
+          src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
+          alt="icon-heart"
+        />
+      </button>
+    </div>
   );
 }
 

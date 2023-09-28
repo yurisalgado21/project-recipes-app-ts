@@ -65,9 +65,7 @@ function RecipesInProgress() {
           <IngredientList recipe={ drinkInfo } />
         </div>
       )}
-      <FavoriteShare/>
-      {/* <button data-testid="share-btn">Compartilhar</button>
-      <button data-testid="favorite-btn">Favoritar</button> */}
+      <FavoriteShare />
       <button data-testid="finish-recipe-btn">Finalizar</button>
     </div>
   );

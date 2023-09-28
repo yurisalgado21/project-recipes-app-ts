@@ -8,14 +8,14 @@ describe('Teste a tela de receita em progresso', () => {
     renderWithRouter(<App />, { route: `/meals/${recipeId}/in-progress` });
 
     const shareBtn = screen.getByRole('button', {
-      name: /icon\-share/i
+      name: /icon-share/i,
     });
     const favoriteBtn = screen.getByRole('button', {
-      name: /icon\-heart/i
-    })
+      name: /icon-heart/i,
+    });
     const finishBtn = screen.getByRole('button', {
-      name: /finalizar/i
-    })
+      name: /finalizar/i,
+    });
     expect(shareBtn).toBeInTheDocument();
     expect(favoriteBtn).toBeInTheDocument();
     expect(finishBtn).toBeInTheDocument();
@@ -24,14 +24,14 @@ describe('Teste a tela de receita em progresso', () => {
     renderWithRouter(<App />, { route: '/meals/52771' });
 
     expect(await screen.findByRole('heading', {
-      name: /spicy arrabiata penne/i
+      name: /spicy arrabiata penne/i,
     })).toBeInTheDocument();
   });
   it('Deve carregar um Drink corretamente', async () => {
     renderWithRouter(<App />, { route: '/drinks/178319' });
 
     expect(await screen.findByRole('heading', {
-      name: /aquamarine/i
+      name: /aquamarine/i,
     })).toBeInTheDocument();
   });
 });

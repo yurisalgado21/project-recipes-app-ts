@@ -74,7 +74,6 @@ describe('RecipeDetails', () => {
         image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
       },
     ];
-    
     renderWithRouter(<App />, { route: urlMeals });
     localStorage.setItem('favoriteRecipes', JSON.stringify(localstorage));
 
