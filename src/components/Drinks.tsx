@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import { DrinkTypes } from '../types';
 import CategoryFilter from './CategoryFilter';
+import DataContext from '../context/DataContext';
 
 export default function Drinks() {
+  const { resultDrinks } = useContext(DataContext);
+  const isDrinks = window.location.pathname.includes('/drinks');
   const [drinks, setDrinks] = useState<DrinkTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterActive, setIsFilterActive] = useState(false);
@@ -50,20 +53,21 @@ export default function Drinks() {
       />
       <div>
         <h1>Drink Recipes</h1>
-        {drinks.slice(0, 12).map((drink, index) => {
-          return (
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <Link to={ `/drinks/${drink.idDrink}` }>
-                <img
-                  src={ drink.strDrinkThumb }
-                  alt={ drink.strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
-                <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
-              </Link>
-            </div>
-          );
-        })}
+        {isDrinks && resultDrinks?.length === 0
+         && drinks.slice(0, 12).map((drink, index) => {
+           return (
+             <div key={ index } data-testid={ `${index}-recipe-card` }>
+               <Link to={ `/drinks/${drink.idDrink}` }>
+                 <img
+                   src={ drink.strDrinkThumb }
+                   alt={ drink.strDrink }
+                   data-testid={ `${index}-card-img` }
+                 />
+                 <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+               </Link>
+             </div>
+           );
+         })}
       </div>
     </div>
   );

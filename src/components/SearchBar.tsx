@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../context/DataContext';
 import { DrinkApiTypes, MealsApiType } from '../types';
-import RecipeCard from './RecipeCard';
 
 export default function SearchBar() {
   const isMeals = window.location.pathname.includes('/meals');
@@ -12,7 +11,11 @@ export default function SearchBar() {
     searchType: '',
   });
   const { result, getApiFetch,
-    resultDrinks, getApiFetchDrinks } = useContext(DataContext);
+    resultDrinks, getApiFetchDrinks,
+    handleMealNavigation, handleDrinkError,
+    handleDrinkNavigation, handleMealError,
+    renderDrinkRecipes, renderMealRecipes,
+    handleDrinkSearch, handleMealSearch } = useContext(DataContext);
   const navigate = useNavigate();
   // const location = useLocation();
   const [inputRadio, setInputRadio] = useState('ingredient');
@@ -28,55 +31,22 @@ export default function SearchBar() {
   };
 
   useEffect(() => {
-    if (result?.length === 1) {
-      navigate(`/meals/${result[0].idMeal}`);
-    }
-    if (isMeals && !result) {
-      console.log(result, 'ele ta aqui');
-      window.alert("Sorry, we haven't found any recipes for these filters.");
-    }
-    if (resultDrinks?.length === 1) {
-      navigate(`/drinks/${resultDrinks[0].idDrink}`);
-    }
-    if (isdrink && resultDrinks === null) {
-      console.log(resultDrinks, 'ou ele ta aqui');
-      window.alert("Sorry, we haven't found any recipes for these filters.");
-    }
+    handleMealNavigation(result as MealsApiType[], navigate);
+    handleMealError(isMeals, result as MealsApiType[]);
+    handleDrinkNavigation(resultDrinks as DrinkApiTypes[], navigate);
+    handleDrinkError(isdrink, resultDrinks as DrinkApiTypes[]);
   }, [result, resultDrinks, navigate]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const isMealsPage = window.location.pathname.includes('/meals');
-    // console.log(isMealsPage);
-    if (inputRadio === 'ingredient') {
-      if (isMealsPage) {
-        getApiFetch('filter.php?i', inputForm.inputText
-          .replaceAll(' ', ''), 'themealdb');
-      }
-      getApiFetchDrinks('filter.php?i', inputForm.inputText
-        .replaceAll(' ', ''), 'thecocktaildb');
+
+    if (isMealsPage) {
+      handleMealSearch(isMealsPage, inputForm, inputRadio, getApiFetch);
     }
-    if (inputRadio === 'name') {
-      if (isMealsPage) {
-        getApiFetch('search.php?s', inputForm.inputText
-          .replaceAll(' ', ''), 'themealdb');
-      }
-      getApiFetchDrinks('search.php?s', inputForm.inputText
-        .replaceAll(' ', ''), 'thecocktaildb');
-    }
-    if (inputRadio === 'firstLetter') {
-      if (inputForm.inputText.length === 1) {
-        if (isMealsPage) {
-          getApiFetch('search.php?f', inputForm.inputText
-            .replaceAll(' ', ''), 'themealdb');
-        } else {
-          getApiFetchDrinks('search.php?f', inputForm.inputText
-            .replaceAll(' ', ''), 'thecocktaildb');
-        }
-      }
-      window.alert('Your search must have only 1 (one) character');
-    }
+
+    handleDrinkSearch(inputForm, inputRadio, getApiFetchDrinks);
   };
 
   return (
@@ -130,36 +100,12 @@ export default function SearchBar() {
       </form>
       {result?.length !== 0 ? (
         <div>
-          <ul>
-            {result?.slice(0, 12).map((recipe: MealsApiType, index) => {
-              return (
-                console.log(recipe, 'oi eu aqui! o meals'),
-                  <RecipeCard
-                    key={ index }
-                    image={ recipe.strMealThumb }
-                    name={ recipe.strMeal }
-                    index={ index }
-                  />
-              );
-            })}
-          </ul>
+          <ul>{renderMealRecipes(result as MealsApiType[])}</ul>
         </div>
       ) : (
         resultDrinks?.length !== 0 && (
           <div>
-            <ul>
-              {resultDrinks?.slice(0, 12).map((recipe: DrinkApiTypes, index) => {
-                return (
-                  console.log(recipe, 'oi eu aqui o drinks!'),
-                    <RecipeCard
-                      key={ index }
-                      image={ recipe.strDrinkThumb }
-                      name={ recipe.strDrink }
-                      index={ index }
-                    />
-                );
-              })}
-            </ul>
+            <ul>{renderDrinkRecipes(resultDrinks as DrinkApiTypes[])}</ul>
           </div>
         )
       )}
