@@ -13,7 +13,7 @@ export interface GlobalTypeContext {
     inputForm: InputFormType, inputRadio: string,
     getApiFetchMeal: GetApiFetchType) => void;
   handleDrinkSearch: (inputForm: InputFormType,
-    inputRadio: string, getApiFetchDrink: GetApiFetchType) => void;
+    inputRadio: string, getApiFetchDrink: GetApiFetchDrinksType) => void;
 }
 
 type InputFormType = {
