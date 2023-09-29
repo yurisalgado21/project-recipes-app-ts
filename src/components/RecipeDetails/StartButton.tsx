@@ -23,7 +23,12 @@ export default function StartButton(props: { rcpId: string }) {
     navigate(toRedirect);
   };
 
-  if (Object.keys(inProgress.drinks || inProgress.meals).includes(rcpId)) {
+  if (
+    inProgress.drinks !== undefined
+  && inProgress.meals !== undefined
+  && (Object.keys(inProgress.drinks).includes(rcpId)
+    || Object.keys(inProgress.meals).includes(rcpId))
+  ) {
     return (
       <button
         className="start-btn"
@@ -44,4 +49,5 @@ export default function StartButton(props: { rcpId: string }) {
       </button>
     );
   }
+  return null;
 }

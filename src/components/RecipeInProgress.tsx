@@ -10,6 +10,8 @@ function RecipesInProgress() {
 
   const [mealsInfo, setMealsInfo] = useState<MealTypes | null>(null);
   const [drinkInfo, setDrinkInfo] = useState<DrinkTypes | null>(null);
+  const [inProgressRecipes, setInprogressRecipes] = useState<Record<string
+  , boolean[]>>({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +30,9 @@ function RecipesInProgress() {
         setDrinkInfo(data.drinks ? data.drinks[0] : null);
         setMealsInfo(null);
       }
+      const inProgressRecipesData = JSON.parse(localStorage
+        .getItem('inProgressRecipes') || '{}');
+      setInprogressRecipes(inProgressRecipesData);
     };
 
     fetchData();
@@ -47,7 +52,12 @@ function RecipesInProgress() {
           <p data-testid="instructions">{ mealsInfo.strInstructions }</p>
           <h1 data-testid="recipe-title">{mealsInfo.strMeal}</h1>
           <h2 data-testid="recipe-category">{mealsInfo.strCategory}</h2>
-          <IngredientList recipe={ mealsInfo } />
+          <IngredientList
+            recipe={ mealsInfo }
+            inProgressRecipes={ inProgressRecipes }
+            recipeId={ recipeId }
+
+          />
         </div>
       )}
       {drinkInfo && (
@@ -62,7 +72,11 @@ function RecipesInProgress() {
           <p data-testid="instructions">{ drinkInfo.strInstructions }</p>
           <h1 data-testid="recipe-title">{drinkInfo.strDrink}</h1>
           <h2 data-testid="recipe-category">{drinkInfo.strCategory}</h2>
-          <IngredientList recipe={ drinkInfo } />
+          <IngredientList
+            recipe={ drinkInfo }
+            inProgressRecipes={ inProgressRecipes }
+            recipeId={ recipeId }
+          />
         </div>
       )}
       <FavoriteShare />
