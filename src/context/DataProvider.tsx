@@ -93,17 +93,15 @@ function DataProvider({ children }: DataProviderProps) {
         'themealdb',
       );
     }
-    if (isMealsPage && inputRadio === 'firstLetter') {
-      if (inputForm.inputText.length === 1) {
-        getApiFetchMeal(
-          'search.php?f',
-          inputForm.inputText.replaceAll(' ', ''),
+    if (inputForm.inputText.length === 1 && isMealsPage && inputRadio === 'firstLetter') {
+      getApiFetchMeal(
+        'search.php?f',
+        inputForm.inputText.replaceAll(' ', ''),
 
-          'themealdb',
-        );
-        window.alert('Your search must have only 1 (one) character');
-      }
+        'themealdb',
+      );
     }
+    window.alert('Your search must have only 1 (one) character');
   }
 
   function handleDrinkSearch(
