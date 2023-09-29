@@ -15,7 +15,7 @@ export interface GlobalTypeContext {
   handleDrinkSearch: (inputForm: InputFormType,
     inputRadio: string, getApiFetchDrink: GetApiFetchDrinksType) => void;
 }
-
+//
 type InputFormType = {
   inputText: string;
   searchType: string;
