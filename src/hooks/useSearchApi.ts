@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { MealsApiType } from '../types';
+import { ApiResultType } from '../types';
 
 const useSearchAPIMeals = () => {
-  const [result, setResult] = useState<MealsApiType[]>([]);
+  const [result, setResult] = useState<ApiResultType[]>([]);
+  // Andrew:
+  // troquei a tipagem pois essa possibilita usar todas as chaves
 
   const getApiFetch = async (searchType: string, param: string, url:string) => {
     try {
@@ -14,6 +16,7 @@ const useSearchAPIMeals = () => {
       console.error(error.message);
     }
   };
+  // Andrew:
   // fiz essa alteração na função pra que ao invés de returnar o meals desestruturado,
   // ela retorna tanto o meals quanto o drinks, assim funciona para os dois endpoints
 
