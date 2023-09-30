@@ -3,18 +3,40 @@ export interface GlobalTypeContext {
   getApiFetch: (searchType: string, param: string, url: string) => Promise<void>;
   resultDrinks: DrinkApiTypes[] | undefined;
   getApiFetchDrinks: (searchType: string, param: string, url: string) => Promise<void>;
+  handleMealNavigation: (resultMeals: MealsApiType[], navigate: any) => void;
+  handleMealError: (isMeals: boolean, resultMeals: MealsApiType[]) => void;
+  handleDrinkNavigation: (resultsDrinks: DrinkApiTypes[], navigate: any) => void;
+  handleDrinkError: (isDrinks: boolean, resultsDrinks: DrinkApiTypes[]) => void;
+  renderMealRecipes: (resultMeal: MealsApiType[]) => JSX.Element[];
+  renderDrinkRecipes: (resultDrink: DrinkApiTypes[]) => JSX.Element[];
+  handleMealSearch: (isMealsPage: boolean,
+    inputForm: InputFormType, inputRadio: string,
+    getApiFetchMeal: GetApiFetchType) => void;
+  handleDrinkSearch: (inputForm: InputFormType,
+    inputRadio: string, getApiFetchDrink: GetApiFetchDrinksType) => void;
 }
+//
+type InputFormType = {
+  inputText: string;
+  searchType: string;
+};
+
+type GetApiFetchType = (searchType: string, param: string, url: string) => Promise<void>;
+type GetApiFetchDrinksType = (searchType: string,
+  param: string, url: string) => Promise<void>;
 
 export interface MealsApiType {
   idMeal: string;
   strMeal: string;
   strCategory: string;
+  strMealThumb: string;
 }
 
 export type DrinkApiTypes = {
   idDrink: string;
   strDrink: string;
   strCategory: string;
+  strDrinkThumb: string;
 };
 
 export type MealTypes = {

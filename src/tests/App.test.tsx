@@ -1,10 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import App from '../App';
 import { renderWithRouter } from '../utils/renderWithRouter';
 import DataProvider from '../context/DataProvider';
-// import Header from '../components/Header';
-// import Meals from '../components/Meals';
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('Farewell, front-end', () => {
   it('teste referentes a renderização dos elementos da tela Login', async () => {
@@ -56,7 +59,9 @@ describe('Farewell, front-end', () => {
     expect(screen.getByRole('heading', {
       name: /meals/i,
     })).toBeInTheDocument();
-    const button = screen.getByTestId('search-top-btn');
+    const button = screen.getByRole('button', {
+      name: /pesquisar/i,
+    });
     console.log(button);
     expect(button).toBeInTheDocument();
     await userEvent.click(button);
@@ -74,8 +79,63 @@ describe('Farewell, front-end', () => {
     await userEvent.type(inputText, 'chicken');
     await userEvent.click(inputRadioIngredient);
     await userEvent.click(buttonSearch);
+    await userEvent.type(inputText, 'aaaaaa');
+    await userEvent.click(inputRadioName);
+    await userEvent.click(buttonSearch);
   });
   test('Testando o input button click na rota /drinks', async () => {
+    renderWithRouter(
+      <DataProvider>
+        <App />
+      </DataProvider>,
+      { route: '/drinks' },
+    );
+    expect(screen.getByRole('heading', {
+      name: /drinks/i,
+    })).toBeInTheDocument();
+    const button = screen.getByRole('button', {
+      name: /pesquisar/i,
+    });
+    await userEvent.click(button);
+    const inputText = screen.getByPlaceholderText(/Pesquisar/i);
+    const inputRadioIngredient = screen.getByText(/ingredient/i);
+    const inputRadioName = screen.getByText(/name/i);
+    const inputRadioFirstLetter = screen.getByText(/first letter/i);
+    const buttonSearch = screen.getByRole('button', {
+      name: /search/i,
+    });
+    await userEvent.type(inputText, 'gin');
+    await userEvent.click(inputRadioName);
+    await userEvent.click(buttonSearch);
+    await userEvent.type(inputText, 'aaaaaa');
+    await userEvent.click(inputRadioFirstLetter);
+    await userEvent.click(buttonSearch);
+  });
+  test('testando se na rota meals, as buscas retornam corretamente.', async () => {
+    renderWithRouter(
+      <DataProvider>
+        <App />
+      </DataProvider>,
+      { route: '/meals' },
+    );
+    expect(screen.getByRole('heading', {
+      name: /meals/i,
+    })).toBeInTheDocument();
+    const button = screen.getByTestId('search-top-btn');
+    await userEvent.click(button);
+    const inputText = screen.getByPlaceholderText(/Pesquisar/i);
+    const inputRadioName = screen.getByTestId('name-search-radio');
+    const buttonSearch = screen.getByRole('button', {
+      name: /search/i,
+    });
+    await userEvent.type(inputText, 'soup');
+    await userEvent.click(inputRadioName);
+    await userEvent.click(buttonSearch);
+    await userEvent.type(inputText, 'arrabiata');
+    await userEvent.click(inputRadioName);
+    await userEvent.click(buttonSearch);
+  });
+  test('testando se na rota drinks, as buscas retornam corretamente.', async () => {
     renderWithRouter(
       <DataProvider>
         <App />
@@ -88,15 +148,14 @@ describe('Farewell, front-end', () => {
     const button = screen.getByTestId('search-top-btn');
     await userEvent.click(button);
     const inputText = screen.getByPlaceholderText(/Pesquisar/i);
-    const inputRadioIngredient = screen.getByText(/ingredient/i);
-    const inputRadioName = screen.getByText(/name/i);
-    const inputRadioFirstLetter = screen.getByText(/first letter/i);
+    const inputRadioName = screen.getByTestId('name-search-radio');
     const buttonSearch = screen.getByRole('button', {
       name: /search/i,
     });
     await userEvent.type(inputText, 'gin');
-    await userEvent.click(inputRadioIngredient);
-    await userEvent.click(inputRadioFirstLetter);
+    await userEvent.click(inputRadioName);
+    await userEvent.click(buttonSearch);
+    await userEvent.type(inputText, 'aaaaaa');
     await userEvent.click(inputRadioName);
     await userEvent.click(buttonSearch);
   });

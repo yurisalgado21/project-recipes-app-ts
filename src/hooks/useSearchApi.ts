@@ -7,10 +7,14 @@ const useSearchAPIMeals = () => {
   // troquei a tipagem pois essa possibilita usar todas as chaves
 
   const getApiFetch = async (searchType: string, param: string, url:string) => {
-    const response = await fetch(`https://www.${url}.com/api/json/v1/1/${searchType}=${param}`);
-    const data = await response.json();
-    //   console.log(searchName, searchType);
-    setResult(data.meals || data.drinks);
+    try {
+      const response = await fetch(`https://www.${url}.com/api/json/v1/1/${searchType}=${param}`);
+      const data = await response.json();
+      //   console.log(searchName, searchType);
+      setResult(data.meals || data.drinks);
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
   // Andrew:
   // fiz essa alteração na função pra que ao invés de returnar o meals desestruturado,
