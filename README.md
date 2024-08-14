@@ -13,17 +13,20 @@ O aplicativo utiliza duas APIs distintas: uma para receitas de comidas e outra p
 
 
 ## Tecnologias Utilizadas:
-React
-Hooks
-Context API
-JavaScript
-CSS
+<div>
+  <p><img align="center" alt="Yuri-React" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg"> React, Hooks, 
+Context API</p>
+  <p><img align="center" alt="Yuri-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg"> JavaScript</p>
+  <p><img align="center" alt="Yuri-CSS" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg"> CSS</p>
+</div>
 
 
 ## Esse Projeto foi feito em parceria com:
-## Yuri: eu
-## Laura: https://github.com/Laura2606
-## Jose Vitor: https://github.com/joseVitor03
-## Paulo: https://github.com/paulohenrique-amaral
-## Eduardo: https://github.com/eduardomfidelis
-## Andrew: https://github.com/andrew-marquezin
+<div>
+  <p>Yuri(Eu): https://github.com/yurisalgado21</p>
+  <p>Laura: https://github.com/Laura2606</p>
+  <p>Jose Vitor: https://github.com/joseVitor03</p>
+  <p>Paulo: https://github.com/paulohenrique-amaral</p>
+  <p>Eduardo: https://github.com/eduardomfidelis</p>
+  <p>Andrew: https://github.com/andrew-marquezin</p>
+</div>
