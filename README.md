@@ -1,6 +1,6 @@
 ## Projeto App de Receitas
 
-    Este projeto consiste na criação de um aplicativo de receitas utilizando tecnologias modernas do ecossistema React, como Hooks e Context API. O objetivo é fornecer uma         experiência de usuário eficiente e intuitiva para visualizar, buscar, filtrar, favoritar e acompanhar o progresso de preparação de receitas de comidas e bebidas.
+    Este projeto consiste na criação de um aplicativo de receitas utilizando tecnologias modernas do ecossistema React, como Hooks e Context API. O objetivo é fornecer uma experiência de usuário eficiente e intuitiva para visualizar, buscar, filtrar, favoritar e acompanhar o progresso de preparação de receitas de comidas e bebidas.
 
 ## Funcionalidades:
     Visualizar receitas de comidas e bebidas.
